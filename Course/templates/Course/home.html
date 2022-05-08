@@ -4,7 +4,6 @@
     <div class="row">
         <div class="col-md-8">
             {% comment %} BIG VIDEO {% endcomment %}
-            {% comment %} {% video {{ videos }}.{{ index }}.url '100% x 100%' %} {% endcomment %}
             {% for video in videos %}
                 {% if forloop.counter == index %}
                     {% video video.url '100% x 100%' %}
