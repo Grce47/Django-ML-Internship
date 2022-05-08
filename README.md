@@ -28,3 +28,8 @@ python manage.py runserver       # To Start Local Server
 ```bash
 python manage.py createsuperuser
 ```
+## HTML File Description
+- **templates/base.html** - Basic Layout and Top Navigation Bar
+- **static/main.css** - Main CSS file, applied to all pages 
+- **Course/templates/Course/home.html** - Body HTML of Course Page contains Main Video, Playlist, Text Editor/Python IDE
+- **User/templates/User/** - Body HTML of Login, Logout, Signup Page 

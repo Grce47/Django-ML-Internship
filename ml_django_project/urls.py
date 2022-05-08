@@ -17,7 +17,6 @@ from django.contrib import admin
 from django.urls import path,include
 from User import views as User_views
 from django.contrib.auth import views as auth_views
-# from Course import views as Course_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),

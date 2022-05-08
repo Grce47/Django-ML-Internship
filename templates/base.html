@@ -11,52 +11,74 @@
               href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
               crossorigin="anonymous">
-        <link rel="stylesheet" href="{% static 'User/main.css' %}">
+
+              
+        <link rel="stylesheet" href="{% static 'main.css' %}">
+        
+
         {% if title %}
-            <title>User - {{ title }}</title>
+            <title>{{ title }}</title>
         {% else %}
-            <title>User</title>
+            <title>Home</title>
         {% endif %}
+
+
     </head>
     <body>
+
+        {% comment %} NAVIGATION BAR {% endcomment %}
+
         <header class="site-header">
             <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
                 <div class="container">
+
+                    {% comment %} PROJECT NAME {% endcomment %}
                     <a class="navbar-brand mr-4 text-white">Django ML Project</a>
-                    <button class="navbar-toggler"
-                            type="button"
-                            data-toggle="collapse"
-                            data-target="#navbarToggle"
-                            aria-controls="navbarToggle"
-                            aria-expanded="false"
-                            aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+
+                    {% comment %} OTHER OPTIONS {% endcomment %}
                     <div class="collapse navbar-collapse" id="navbarToggle">
                         <div class="navbar-nav mr-auto">
+
                             <a class="nav-item nav-link" href="{% url 'User-signup' %}">Sign Up</a>
+
                             {% if user.is_authenticated %}
+
                             <a class="nav-item nav-link" href="{% url 'User-logout' %}">Logout</a>
                             <a class="nav-item nav-link" href="{% url 'Course-home' %}">Course</a>
                             <a class="nav-item nav-link">{{ user.get_username }}</a>
+
                             {% else %}
+
                             <a class="nav-item nav-link" href="{% url 'User-login' %}">Login</a>
+
                             {% endif %}
-                            
-                            
+
                         </div>
                     </div>
+
                 </div>
             </nav>
         </header>
+
+        {% comment %} NAVIGATION BAR END {% endcomment %}
+
+
+
         <main role="main" class="container">
             <div>
+
                 {% if messages %}
                     {% for message in messages %}<div class="alert alert-{{ message.tags }}">{{ message }}</div>{% endfor %}
                 {% endif %}
+
+                {% comment %} MAIN BODY GOES HERE USING THIS BLOCK CONTENT {% endcomment %}
                 {% block content %}{% endblock %}
+
             </div>
         </main>
+
+
+
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

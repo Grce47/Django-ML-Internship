@@ -9,6 +9,7 @@ from videos.models import Video
 def home(request,index=1):
     context = {
         'videos' : Video.objects.all(),
-        'index' : index
+        'index' : index,
+        'title' : 'Course ' + str(index)
     }
     return render(request,'Course/home.html',context=context)
