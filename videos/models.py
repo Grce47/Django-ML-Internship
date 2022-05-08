@@ -10,4 +10,4 @@ class Video(models.Model):
         return str(self.title)
 
     class Meta:
-        ordering = ['-added']
+        ordering = ['added']

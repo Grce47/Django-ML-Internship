@@ -1,35 +1,36 @@
 {% extends 'User/base.html' %}
+{% load embed_video_tags %}
 {% block content %}
     <div class="row">
         <div class="col-md-8">
             {% comment %} BIG VIDEO {% endcomment %}
-            <div class="embed-responsive embed-responsive-21by9">
-                <iframe class="embed-responsive-item"
-                        width="560"
-                        height="315"
-                        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                        title="YouTube video player"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen></iframe>
-            </div>
+            {% comment %} {% video {{ videos }}.{{ index }}.url '100% x 100%' %} {% endcomment %}
+            {% for video in videos %}
+                {% if forloop.counter == index %}
+                    {% video video.url '100% x 100%' %}
+                {% endif %}
+            {% endfor %}
+            {% comment %} BIG VIDEO END {% endcomment %}
             {% comment %} TEXT-AREA {% endcomment %}
             <div class="form-outline pt-3">
                 <textarea class="form-control" id="textAreaExample1" rows="12"></textarea>
             </div>
+            {% comment %} TEXT-AREA END {% endcomment %}
         </div>
         <div class="col-md-4">
             <div class="content-section">
                 {% comment %} SIDEBAR {% endcomment %}
-                <h3>Our Sidebar</h3>
+                <h3>Playlist</h3>
                 <p class='text-muted'>
                     <ul class="list-group">
-                        <li class="list-group-item list-group-item-light">Post 1</li>
-                        <li class="list-group-item list-group-item-light">Post 2</li>
-                        <li class="list-group-item list-group-item-light">Post 3</li>
-                        <li class="list-group-item list-group-item-light">Post 4</li>
+                        {% for video in videos %}
+                            <li class="list-group-item list-group-item-light">
+                                <a href="{% url 'Course-home' %}{{ forloop.counter }}">{{ video.title }}</a>
+                            </li>
+                        {% endfor %}
                     </ul>
                 </p>
+                {% comment %} SIDEBAR END {% endcomment %}
             </div>
         </div>
     </div>

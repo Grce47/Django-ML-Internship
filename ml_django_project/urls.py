@@ -17,11 +17,11 @@ from django.contrib import admin
 from django.urls import path,include
 from User import views as User_views
 from django.contrib.auth import views as auth_views
-from Course import views as Course_views
+# from Course import views as Course_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('course/',Course_views.home,name='Course-home'),
+    path('course/',include('Course.urls')),
     path('signup/',User_views.signup,name='User-signup'),
     path('',auth_views.LoginView.as_view(template_name='User/login.html'),name='User-login'),
     path('logout/',auth_views.LogoutView.as_view(template_name='User/logout.html'),name='User-logout'),
