@@ -3,7 +3,7 @@
 - Grace Sharma
 - Aritra Mitra
 ## About
-On-Going Project
+On-Going Project.
 The goals of this Project
 are as follows:
 - "Add Points"
