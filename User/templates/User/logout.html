@@ -1,0 +1,9 @@
+{% extends 'User/base.html' %}
+{% block content %}
+    <legend class="border-bottom mb-4">
+        <h2>You have been Logged Out!</h2>
+    </legend>
+    <small class="text-muted">
+        <a href="{% url 'User-login' %}">Log in again</a>
+    </small>
+{% endblock content %}
