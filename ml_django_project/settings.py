@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'videos',
     'embed_video',
+    'accesscontrol.apps.AccesscontrolConfig'
 ]
 
 MIDDLEWARE = [
@@ -52,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'accesscontrol.middlewares.AccessRestricter',
 ]
 
 ROOT_URLCONF = 'ml_django_project.urls'
