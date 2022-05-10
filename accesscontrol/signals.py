@@ -9,16 +9,22 @@ def on_user_logged_in(sender, **kwargs):
 @receiver(user_logged_out)
 def on_user_logged_out(sender, **kwargs):
     usr = LoggedInUser.objects.get(user=kwargs.get('user'))  #the user is found from the list of logged-in users
-    request = kwargs.get('request')
-    Session.objects.filter(session_key=request.session.session_key).delete()
+    request = kwargs.get('request')     #the request will be used to find the session data
+    Session.objects.filter(session_key=request.session.session_key).delete()    #the current session is deleted
     try:
-        Session.objects.get(session_key=usr.session_key)
+        Session.objects.get(session_key=usr.session_key)    #trying to find the 1st session
         try:
-            Session.objects.get(session_key=usr.session_key_2)
-        except Session.DoesNotExist:
-            print("2nd instance logged out")
+            Session.objects.get(session_key=usr.session_key_2)  #trying to find the 2nd session
+        except Session.DoesNotExist:    #if the 2nd session is not found (which means we deleted it in line 13)
+            print("2nd instance logged out")    #these print statements are for debugging purposes, but they will be removed later when all the bugs are fixed
             request.user.logged_in_user.session_key_2 = None
-            request.user.logged_in_user.save()
+            request.user.logged_in_user.save()  #saved with 2nd key nulled
     except Session.DoesNotExist:
-        print("1st instance logged out")
-        request.user.logged_in_user.delete()
+        print("1st instance logged out")    #if the 1st session is not found (line 13 again)
+        if usr.session_key_2:   #in case the second session exists, that will take over as the 1st session
+            usr.session_key = usr.session_key_2
+            usr.session_key_2 = None
+            usr.save()
+        else:
+            usr.delete()    #if not, then the user is no longer logged in
+        
