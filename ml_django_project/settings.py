@@ -31,8 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'Course.apps.CourseConfig',
-    'User.apps.UserConfig',
+    'Course.apps.CourseConfig', #course app
+    'User.apps.UserConfig', #User app
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,9 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'videos',
-    'embed_video',
-    'accesscontrol.apps.AccesscontrolConfig'
+    'videos',   #videos app
+    'embed_video',  #used in videos app
+    'accesscontrol.apps.AccesscontrolConfig'    #access control app
 ]
 
 MIDDLEWARE = [
@@ -53,7 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'accesscontrol.middlewares.AccessRestricter',
+    'accesscontrol.middlewares.AccessRestricter',   #middleware from access control
 ]
 
 ROOT_URLCONF = 'ml_django_project.urls'
