@@ -2,42 +2,39 @@
 {% load embed_video_tags %}
 {% block content %}
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-8 col-sm-6">
+            <div class="row">
+                <div class="col-md-12 col-sm-12">
 
-            {% comment %} BIG VIDEO {% endcomment %}
-
-            {% for video in videos %}
-                {% if forloop.counter == index %}
-
-                    {% comment %} ACCESS MAIN VIDEO BY 'video' VARIABLE {% endcomment %}
-                    {% video video.url '100% x 100%' %}
-
-                {% endif %}
-            {% endfor %}
-
-            {% comment %} BIG VIDEO END {% endcomment %}
+                    {% comment %} MAIN VIDEO {% endcomment %}
+                    {% for video in videos %}
+                        {% if forloop.counter == index %}
+                            {% comment %} ACCESS MAIN VIDEO BY 'video' VARIABLE {% endcomment %}
+                            <div class="video-container">{% video video.url '100%x100%' %}</div>
+                        {% endif %}
+                    {% endfor %}
 
 
-            {% comment %} TEXT-AREA {% endcomment %}
+                </div>
+                <div class="col-md-12 col-sm-12">
 
-            <div class="form-outline pt-3">
-                <textarea class="form-control" id="textAreaExample1" rows="12"></textarea>
+                    {% comment %} TEXT_AREA {% endcomment %}
+                    <div class="form-outline pt-3">
+                        <textarea class="form-control" id="textAreaExample1" rows="9"></textarea>
+                    </div>
+
+
+                </div>
             </div>
-
-            {% comment %} TEXT-AREA END {% endcomment %}
-
-
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 col-sm-6" style="padding-top:10px">
             <div class="content-section">
 
+
                 {% comment %} SIDEBAR {% endcomment %}
-
                 <h3>Playlist</h3>
-
                 <p class='text-muted'>
                     <ul class="list-group">
-
                         {% for video in videos %}
                             <li class="list-group-item list-group-item-light">
 
@@ -46,10 +43,8 @@
 
                             </li>
                         {% endfor %}
-
                     </ul>
                 </p>
-
                 {% comment %} SIDEBAR END {% endcomment %}
 
             </div>
