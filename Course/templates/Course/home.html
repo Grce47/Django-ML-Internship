@@ -31,12 +31,22 @@
                             {% if forloop.counter == index %}
                                 <li class="list-group-item list-group-item-light disable">
                                     {% comment %} EACH VIDEO {% endcomment %}
-                                    <a>{{ video.title }}</a>
+                                    <a>
+                                        {% video video.url as my_video %}
+                                            <img class="thumbnail" src="{{ my_video.thumbnail }}">
+                                        {% endvideo %}
+                                        <p class="title">{{ video.title }}</p>
+                                    </a>
                                 </li>
                             {% else %}
                                 <li class="list-group-item list-group-item-light">
                                     {% comment %} EACH VIDEO {% endcomment %}
-                                    <a href="{% url 'Course-home' %}{{ forloop.counter }}">{{ video.title }}</a>
+                                    <a href="{% url 'Course-home' %}{{ forloop.counter }}">
+                                        {% video video.url as my_video %}
+                                            <img class="thumbnail" src="{{ my_video.thumbnail }}">
+                                        {% endvideo %}
+                                        <p class="title">{{ video.title }}</p>
+                                    </a>
                                 </li>
                             {% endif %}
                         {% endfor %}
