@@ -44,7 +44,7 @@
                             {% if user.is_authenticated %}
                                 <a class="nav-item nav-link" href="{% url 'User-logout' %}">Logout</a>
                                 <a class="nav-item nav-link" href="{% url 'Course-home' %}">Course</a>
-                                <a class="nav-item nav-link">{{ user.get_username }}</a>
+                                <a class="nav-item nav-link" href="{% url 'User-listcodes' %}">{{ user.get_username }}</a>
                             {% else %}
                                 <a class="nav-item nav-link" href="{% url 'User-login' %}">Login</a>
                             {% endif %}

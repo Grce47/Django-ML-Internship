@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section container">
+        <ul class="list-group">
+            {% for code in codes %}
+            <li class="list-group-item"><a href="{% url 'User-detailcode' %}{{ forloop.counter }}">{{code}}</a></li>
+            {% endfor %}
+          </ul>
+    </div>
+{% endblock content %}

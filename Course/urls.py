@@ -1,7 +1,6 @@
 from django.urls import path
-from . import views
-
+from .views import runcode,home
 urlpatterns = [
-    path('',views.home, name='Course-home'),    #homepage
-    path('<int:index>',views.home, name='Course-home')  #page for a specific course
+    path('',home, name='Course-home'),    #homepage
+    path('<int:index>',home, name='Course-home'),  #page for a specific course
 ]
