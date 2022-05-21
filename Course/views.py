@@ -1,3 +1,4 @@
+import traceback
 from django.shortcuts import render
 import sys
 from django.contrib.auth.decorators import login_required
@@ -21,7 +22,8 @@ def runcode(request,index=1):
     
     if request.method == "POST":
         codeareadata = request.POST['codearea']
-
+        with open('user_code.py','w') as f:
+            f.writelines(codeareadata)
         try:
             #save original standart output reference
 
@@ -30,8 +32,7 @@ def runcode(request,index=1):
 
             #execute code
 
-            exec(codeareadata)  #example =>   print("hello world")
-
+            exec(open('user_code.py').read())
             sys.stdout.close()
 
             sys.stdout = original_stdout  #reset the standard output to its original value
@@ -42,8 +43,11 @@ def runcode(request,index=1):
             
         except Exception as e:
             # to return error in the code
+            e_type,e_val,e_tb = sys.exc_info()
             sys.stdout = original_stdout
-            output = e
+            with open('file.txt','a') as fh:
+                traceback.print_exception(e_type,e_val,e_tb,file=fh)
+            output = open('file.txt', 'r').read()
     
 
     context = {
@@ -55,7 +59,6 @@ def runcode(request,index=1):
         'output' : output
     }
 
-    my_code = pythonCode.create(request.user,codeareadata,output)
+    my_code = pythonCode.create(request.user,codeareadata,output,request.session.session_key)
     my_code.save()
-
     return render(request,'Course/home.html',context=context)
