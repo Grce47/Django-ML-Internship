@@ -2,23 +2,23 @@
 {% load embed_video_tags %}
 {% block content %}
 <div class="row">
-    <div class="col-md-8 col-sm-6">
+    <div class="col-md-7 col-sm-6">
         <div class="row">
-            <div class="col-md-12 col-sm-12">
+            <!-- <div class="col-md-12 col-sm-12">
                 <div class="video-container">{% video main_video.url '100%x100%' %}</div>
-            </div>
+            </div> -->
             <div class="col-md-12 col-sm-12">
                 <form action="/runcode/{{index}}" method="post">
                     {% csrf_token %}
-                    <div class="form-group pt-3">
+                    <div class="form-group-pt-3" >
                         <!-- <label for="codearea">Code Area</label> -->
-                        <textarea type="text" class="form-control" id="codearea" name="codearea" rows="10"
+                        <textarea type="text" class="form-control" id="codearea" name="codearea" rows="25" placeholder="#Code Here"
                             onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}">{{ code }}</textarea>
                     </div>
 
                     <div class="form-group">
                         <!-- <label for="output">Output</label> -->
-                        <textarea type="text" class="form-control" id="output" name="output" rows="4"
+                        <textarea type="text" class="form-control" id="output" name="output" rows="18" 
                             disabled> {{ output }} </textarea>
                     </div>
 
@@ -27,7 +27,10 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4 col-sm-6">
+    <div class="col-md-5 col-sm-6">
+        <div class="content-section">
+            <div class="video-container">{% video main_video.url '20%x20%' %}</div>
+        </div>
         <div class="content-section">
             {% comment %} SIDEBAR {% endcomment %}
             <h3>Playlist</h3>
@@ -50,6 +53,7 @@
             </ul>
             </p>
             {% comment %} SIDEBAR END {% endcomment %}
+        
         </div>
     </div>
 </div>
