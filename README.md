@@ -34,5 +34,3 @@ python manage.py createsuperuser
 - **static/main.css** - Main CSS file, applied to all pages 
 - **Course/templates/Course/home.html** - Body HTML of Course Page contains Main Video, Playlist, Text Editor/Python IDE
 - **User/templates/User/** - Body HTML of Login, Logout, Signup Page 
-- **User/templates/User/list_codes.html** - HTML of list of codes per user
-- **User/templates/User/detail_code.html** - HTML of detail view of a saved code
