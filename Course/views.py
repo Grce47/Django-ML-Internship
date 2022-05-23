@@ -58,8 +58,7 @@ def runcode(request,index=1):
         'code' : codeareadata,
         'output' : output
     }
-    if(not codeareadata.isspace() or not len(codeareadata)):
-        print(len(codeareadata))
-        my_code = pythonCode.create(request.user,codeareadata,output,request.session.session_key)
-        my_code.save()
+
+    my_code = pythonCode.create(request.user,codeareadata,output,request.session.session_key)
+    my_code.save()
     return render(request,'Course/home.html',context=context)
