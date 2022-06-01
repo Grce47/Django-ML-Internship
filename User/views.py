@@ -40,7 +40,7 @@ def signup(request):
             request,
             "User/payment.html",
             {
-                "callback_url": "http://" + "127.0.0.1:8000" + "/callback/",
+                "callback_url": "http://" "172.105.54.200" + "/callback/",
                 "razorpay_key": "rzp_test_Txuj1dmhZX8vUs",
                 "order": order,
             },
