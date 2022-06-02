@@ -9,26 +9,19 @@ from .constants import PaymentStatus
 import csv
 from django.views.decorators.csrf import csrf_exempt
 import json
-
+with open('/etc/config.json') as config_file:
+    config = json.load(config_file)
+rzp_k1 = config["RAZORPAY_KEY_1"]
+rzp_k2 = config["RAZORPAY_KEY_2"]
 
 def signup(request):
     if request.method == 'POST':
         form = UserSignUpForm(request.POST)
-        # amount = 100
-        # client = razorpay.Client(
-        #             auth=("rzp_test_Txuj1dmhZX8vUs", "6wb44PRbVVFXWvCKWPMgfMDC"))
-        # payment = client.order.create({'amount': amount, 'currency': 'INR',
-        #                                'payment_capture': '1'})
-        # if(payment):
-        #     print("hsdkjsakjhfsakdlhfskdajlfhsakdjfhakdsjfhkdsaljfhaksljfdhsakjf")
-        
-        # payment = client.order.create({'amount': amount, 'currency': 'INR',
-        #                                'payment_capture': '1'})
         if form.is_valid():
             user=form.save()
             amount=1
             client = razorpay.Client(
-                    auth=("rzp_test_Txuj1dmhZX8vUs", "6wb44PRbVVFXWvCKWPMgfMDC"))
+                    auth=(rzp_k1, rzp_k2))
             razorpay_order = client.order.create(
             {"amount": int(amount) * 100, "currency": "INR", "payment_capture": "1"}
                     )
@@ -40,19 +33,11 @@ def signup(request):
             request,
             "User/payment.html",
             {
-                "callback_url": "http://" "172.105.54.200" + "/callback/",
-                "razorpay_key": "rzp_test_Txuj1dmhZX8vUs",
+                "callback_url": "http://" + "172.105.54.200" + "/callback/",
+                "razorpay_key": rzp_k1,
                 "order": order,
             },
         )
-        
-
-            # form.save()
-            # username = form.cleaned_data.get('username')
-            # messages.success(request,f'Account created for {username}!')
-            # if request.user.is_authenticated:   
-            #     return redirect('Course-home')
-            # return redirect('User-login')
     else:
         form = UserSignUpForm()
     
@@ -61,7 +46,7 @@ def signup(request):
 @csrf_exempt
 def callback(request):
     def verify_signature(response_data):
-        client = razorpay.Client(auth=("rzp_test_Txuj1dmhZX8vUs", "6wb44PRbVVFXWvCKWPMgfMDC"))
+        client = razorpay.Client(auth=(rzp_k1, rzp_k2))
         return client.utility.verify_payment_signature(response_data)
 
     if "razorpay_signature" in request.POST:
