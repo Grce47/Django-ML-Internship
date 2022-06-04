@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load embed_video_tags %}
 {% block content %}
     <div class="content-section container">
         <form method="POST">
@@ -14,5 +15,22 @@
                 <button type="submit" class="btn btn-outline-info">Login</button>
             </div>
         </form>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-sm-6">
+            <div class="row">
+                <div class="login-video">
+                    <div class="video-container">{% video "https://www.youtube.com/watch?v=mO_dS3rXDIs" '100%x100%' %}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6">
+            <div class="col-md-12 col-sm-12">
+                {% comment %} TEXT_AREA {% endcomment %}
+                <div class="form-outline pt-3 pb-3">
+                    <textarea class="form-control" id="textAreaExample1" rows="9"></textarea>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock content %}

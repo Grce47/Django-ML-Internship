@@ -26,9 +26,9 @@ with open('/etc/config.json') as config_file:
 SECRET_KEY = config['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['172.105.54.200']
+ALLOWED_HOSTS = ['172.105.54.200','127.0.0.1']
 
 
 # Application definition
