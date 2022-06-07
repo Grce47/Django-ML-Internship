@@ -10,9 +10,13 @@
                 </legend>
                 {{ form|crispy }}
             </fieldset>
+            {% if form_isValid %}
+            <script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_JeeWyCs6RQ6nS9" async> </script> 
+            {% else %}
             <div class="form-group">
                 <button type="submit" class="btn btn-outline-info">Proceed to Payment</button>
             </div>
+            {% endif %}
         </form>
     </div>
 {% endblock content %}

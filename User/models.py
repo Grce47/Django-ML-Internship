@@ -24,26 +24,14 @@ class pythonCode(models.Model):
         return self.added.strftime('%Y-%m-%d %H:%M')
     class Meta:
         ordering = ['-added']
-
-class Order(models.Model):
-    user = models.ForeignKey(User,on_delete=models.CASCADE)
-    amount = models.FloatField(_("Amount"), null=False, blank=False)
-    status = CharField(
-        _("Payment Status"),
-        default=PaymentStatus.PENDING,
-        max_length=254,
-        blank=False,
-        null=False,
-    )
-    provider_order_id = models.CharField(
-        _("Order ID"), max_length=40, null=False, blank=False
-    )
-    payment_id = models.CharField(
-        _("Payment ID"), max_length=36, null=False, blank=False
-    )
-    signature_id = models.CharField(
-        _("Signature ID"), max_length=128, null=False, blank=False
-    )
-
+class Orders(models.Model):
+    user = models.CharField(max_length=150,default="temp")
+    session_key=models.CharField(max_length=150,default="temp",null=False)
+    first_name = models.CharField(max_length=150,default="temp")
+    last_name = models.CharField(max_length=150,default="temp")
+    email = models.EmailField(max_length=150,default="temp@temp.com")
+    # username = models.CharField(max_length=150,default="temp")
+    password1=models.CharField(max_length=150,default="temp")
+    password2=models.CharField(max_length=150,default="temp")
     def __str__(self):
-        return f"{self.id}-{self.user}-{self.status}"
+        return f"{self.id}-{self.user}"
