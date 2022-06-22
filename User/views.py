@@ -4,7 +4,7 @@ from django.contrib import messages
 from .forms import UserSignUpForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import pythonCode, Orders
+from .models import pythonCode, Order
 import razorpay
 from .constants import PaymentStatus
 import csv
@@ -21,13 +21,13 @@ def signup(request):
             email=form.cleaned_data.get('email')
             password1=form.cleaned_data.get('password1')
             password2=form.cleaned_data.get('password2')
-            if Orders.objects.filter(session_key=request.session.session_key).exists():
+            if Order.objects.filter(session_key=request.session.session_key).exists():
                 messages.error(request,f'Please Close all Other Open Sessions Or Start a new Session')
                 return redirect('User-login')
             else:
                 request.session.save()
                 print(request.session.session_key)
-                order = Orders.objects.create(user=username, first_name=first_name, last_name=last_name,email=email,password1=password1,password2=password2,session_key=request.session.session_key)
+                order = Order.objects.create(user=username, first_name=first_name, last_name=last_name,email=email,password1=password1,password2=password2,session_key=request.session.session_key)
                 order.save()
     else:
         form = UserSignUpForm()
@@ -39,7 +39,7 @@ def signup(request):
 def callback(request):
     session_key=request.session.session_key
     print(session_key)
-    order=Orders.objects.get(session_key=session_key)
+    order=Order.objects.get(session_key=session_key)
     user=User.objects.create_user(username=order.user,first_name=order.first_name, last_name=order.last_name, email=order.email, password=order.password1)
     messages.success(request,f'Account created for {order.user}!')
     order.session_key="success"

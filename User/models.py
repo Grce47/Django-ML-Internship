@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime, date
 from django.db.models.fields import CharField
 from django.utils.translation import gettext_lazy as _
 from .constants import PaymentStatus
@@ -24,7 +25,8 @@ class pythonCode(models.Model):
         return self.added.strftime('%Y-%m-%d %H:%M')
     class Meta:
         ordering = ['-added']
-class Orders(models.Model):
+
+class Order(models.Model):
     user = models.CharField(max_length=150,default="temp")
     session_key=models.CharField(max_length=150,default="temp",null=False)
     first_name = models.CharField(max_length=150,default="temp")
@@ -33,5 +35,8 @@ class Orders(models.Model):
     # username = models.CharField(max_length=150,default="temp")
     password1=models.CharField(max_length=150,default="temp")
     password2=models.CharField(max_length=150,default="temp")
+    date=models.DateField(auto_now_add=True,auto_now=False)
+    date_joined= models.CharField(max_length=150,default="temp")
+    method=models.CharField(max_length=100,default="temp")
     def __str__(self):
         return f"{self.id}-{self.user}"
