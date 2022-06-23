@@ -53,7 +53,7 @@ def download_data(request):
 
         writer = csv.writer(response)
         writer.writerow(['User','Session Key', 'first_name', 'last_name','Date','date_joined','method'])
-        for code in pythonCode.objects.all():
+        for code in Order.objects.all():
             column = [code.user,code.session_key,code.first_name,code.last_name,code.date , code.date_joined,code.method]
             writer.writerow(column)
         
