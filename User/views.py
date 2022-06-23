@@ -45,3 +45,19 @@ def callback(request):
     order.session_key="success"
     order.save()
     return redirect('Course-home')
+
+@login_required
+def download_data(request):
+    if request.user.is_staff:
+        response = HttpResponse(content_type='text/csv')
+
+        writer = csv.writer(response)
+        writer.writerow(['User','Session Key', 'first_name', 'last_name','Date','date_joined','method'])
+        for code in pythonCode.objects.all():
+            column = [code.user,code.session_key,code.first_name,code.last_name,code.date , code.date_joined,code.method]
+            writer.writerow(column)
+        
+        response['Content-Disposition'] = 'attachment; filename="codes.csv"'
+        return response
+    else:
+        return redirect('Course-home')
