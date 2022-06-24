@@ -15,19 +15,22 @@ def signup(request):
     if request.method == 'POST':
         form = UserSignUpForm(request.POST)
         if form.is_valid():
+            session_key=request.session.session_key
             username=form.cleaned_data.get('username')
             first_name=form.cleaned_data.get('first_name')
             last_name=form.cleaned_data.get('last_name')
             email=form.cleaned_data.get('email')
             password1=form.cleaned_data.get('password1')
             password2=form.cleaned_data.get('password2')
-            if Order.objects.filter(session_key=request.session.session_key).exists():
+            if Order.objects.filter(session_key=request.session.session_key).exists() or Order.objects.filter(user=username).exists():
                 messages.error(request,f'Please Close all Other Open Sessions Or Start a new Session')
                 return redirect('User-login')
             else:
-                request.session.save()
-                print(request.session.session_key)
-                order = Order.objects.create(user=username, first_name=first_name, last_name=last_name,email=email,password1=password1,password2=password2,session_key=request.session.session_key)
+                order = Order.objects.create(
+                user=username, first_name=first_name, last_name=last_name,
+                email=email,password1=password1,password2=password2,session_key=session_key
+                    )
+                order.date_joined=str(order.date)
                 order.save()
     else:
         form = UserSignUpForm()
@@ -38,13 +41,17 @@ def signup(request):
 @csrf_exempt
 def callback(request):
     session_key=request.session.session_key
-    print(session_key)
+    payment_id=request.GET['payment_id']
+    client=razorpay.Client(auth=("rzp_live_SN60y2d5pTIgRT","S6ATAbXIVkO0vb41z9VLAcj3"))
+    temp=client.payment.fetch(payment_id)
     order=Order.objects.get(session_key=session_key)
     user=User.objects.create_user(username=order.user,first_name=order.first_name, last_name=order.last_name, email=order.email, password=order.password1)
     messages.success(request,f'Account created for {order.user}!')
     order.session_key="success"
+    order.method=temp['method']
     order.save()
     return redirect('Course-home')
+
 
 @login_required
 def download_data(request):
