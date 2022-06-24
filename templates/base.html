@@ -44,16 +44,16 @@
                     {% comment %} OTHER OPTIONS {% endcomment %}
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <div class="navbar-nav mr-auto">
-                            <a class="nav-item nav-link" href="{% url 'User-signup' %}">Sign Up</a>
                             {% if user.is_authenticated %}
-                                <a class="nav-item nav-link" href="{% url 'User-logout' %}">Logout</a>
+                                <a class="nav-item nav-link" href="{% url 'User-logout' %}">Log Out</a>
                                 <a class="nav-item nav-link" href="{% url 'Course-home' %}">Course</a>
                                 <a class="nav-item nav-link">{{ user.get_username }}</a>
                             {% if user.is_staff %}
                             <a class="nav-item nav-link" href="{% url 'User-download' %}">Download</a>
                             {% endif %} 
                             {% else %}
-                                <a class="nav-item nav-link" href="{% url 'User-login' %}">Login</a>
+				<a class="nav-item nav-link" href="{% url 'User-signup' %}">Sign Up</a>
+                                <a class="nav-item nav-link" href="{% url 'User-login' %}">Log In</a>
                             {% endif %}
                         </div>
                     </div>
