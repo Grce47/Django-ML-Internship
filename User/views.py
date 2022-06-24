@@ -15,6 +15,8 @@ def signup(request):
     if request.method == 'POST':
         form = UserSignUpForm(request.POST)
         if form.is_valid():
+            if not request.session.session_key:
+                request.session.save()
             session_key=request.session.session_key
             username=form.cleaned_data.get('username')
             first_name=form.cleaned_data.get('first_name')
