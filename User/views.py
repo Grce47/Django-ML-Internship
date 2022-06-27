@@ -10,6 +10,8 @@ from .constants import PaymentStatus
 import csv
 from django.views.decorators.csrf import csrf_exempt
 import json
+from django.utils import timezone
+from datetime import datetime
 
 def signup(request):
     if request.method == 'POST':
@@ -24,6 +26,10 @@ def signup(request):
             email=form.cleaned_data.get('email')
             password1=form.cleaned_data.get('password1')
             password2=form.cleaned_data.get('password2')
+            for order in Order.objects.all():
+                timediff = timezone.now() - order.date
+                if timediff.total_seconds() >86400:
+                    order.delete()
             if Order.objects.filter(session_key=request.session.session_key).exists() or Order.objects.filter(user=username).exists():
                 messages.error(request,f'Please Close all Other Open Sessions Or Start a new Session')
                 return redirect('User-login')
@@ -50,6 +56,8 @@ def callback(request):
     user=User.objects.create_user(username=order.user,first_name=order.first_name, last_name=order.last_name, email=order.email, password=order.password1)
     messages.success(request,f'Account created for {order.user}!')
     order.session_key="success"
+    order.password1="success"
+    order.password2="success"
     order.method=temp['method']
     order.save()
     return redirect('Course-home')
@@ -66,7 +74,7 @@ def download_data(request):
             column = [code.user,code.session_key,code.first_name,code.last_name,code.date , code.date_joined,code.method]
             writer.writerow(column)
         
-        response['Content-Disposition'] = 'attachment; filename="codes.csv"'
+        response['Content-Disposition'] = 'attachment; filename="orders.csv"'
         return response
     else:
         return redirect('Course-home')

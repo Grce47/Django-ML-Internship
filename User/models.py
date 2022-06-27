@@ -35,7 +35,7 @@ class Order(models.Model):
     # username = models.CharField(max_length=150,default="temp")
     password1=models.CharField(max_length=150,default="temp")
     password2=models.CharField(max_length=150,default="temp")
-    date=models.DateField(auto_now_add=True,auto_now=False)
+    date=models.DateTimeField(auto_now_add=True,auto_now=False)
     date_joined= models.CharField(max_length=150,default="temp")
     method=models.CharField(max_length=100,default="temp")
     def __str__(self):
