@@ -10,13 +10,8 @@ from .constants import PaymentStatus
 import csv
 from django.views.decorators.csrf import csrf_exempt
 import json
-<<<<<<< HEAD
-from datetime import datetime
-from django.utils import timezone
-=======
 from django.utils import timezone
 from datetime import datetime
->>>>>>> d74e7080376c3b5089824c8628243068e564d029
 
 def signup(request):
     if request.method == 'POST':
@@ -33,11 +28,7 @@ def signup(request):
             password2=form.cleaned_data.get('password2')
             for order in Order.objects.all():
                 timediff = timezone.now() - order.date
-<<<<<<< HEAD
-                if timediff.total_seconds() > 86400:
-=======
                 if timediff.total_seconds() >86400:
->>>>>>> d74e7080376c3b5089824c8628243068e564d029
                     order.delete()
             if Order.objects.filter(session_key=request.session.session_key).exists() or Order.objects.filter(user=username).exists():
                 messages.error(request,f'Please Close all Other Open Sessions Or Start a new Session')
