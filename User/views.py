@@ -12,7 +12,8 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from django.utils import timezone
 from datetime import datetime
-
+with open('/etc/config.json','r') as config_file:
+    f = json.load(config_file)
 def signup(request):
     if request.method == 'POST':
         form = UserSignUpForm(request.POST)
@@ -30,9 +31,11 @@ def signup(request):
                 timediff = timezone.now() - order.date
                 if timediff.total_seconds() >86400:
                     order.delete()
-            if Order.objects.filter(session_key=request.session.session_key).exists() or Order.objects.filter(user=username).exists():
+            if Order.objects.filter(session_key=request.session.session_key).exists():
                 messages.error(request,f'Please Close all Other Open Sessions Or Start a new Session')
                 return redirect('User-login')
+            elif Order.objects.filter(user=username).exists():
+                messages.error(request,f'Please Choose a Different Username')
             else:
                 order = Order.objects.create(
                 user=username, first_name=first_name, last_name=last_name,
@@ -50,7 +53,7 @@ def signup(request):
 def callback(request):
     session_key=request.session.session_key
     payment_id=request.GET['payment_id']
-    client=razorpay.Client(auth=("rzp_live_SN60y2d5pTIgRT","S6ATAbXIVkO0vb41z9VLAcj3"))
+    client=razorpay.Client(auth=(f['RAZORPAY_KEY_1'],f['RAZORPAY_KEY_2']))
     temp=client.payment.fetch(payment_id)
     order=Order.objects.get(session_key=session_key)
     user=User.objects.create_user(username=order.user,first_name=order.first_name, last_name=order.last_name, email=order.email, password=order.password1)
