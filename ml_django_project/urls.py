@@ -26,4 +26,5 @@ urlpatterns = [
     path('logout/',auth_views.LogoutView.as_view(template_name='User/logout.html'),name='User-logout'), #log out page
     path('callback/',User_views.callback,name='callback'),
     path('download/',User_views.download_data,name='User-download'),
+    path('password/',User_views.change_password,name='change_password'),
 ]
