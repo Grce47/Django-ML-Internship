@@ -4,12 +4,9 @@ from django.db import migrations, transaction
 from django.contrib.auth.models import User
 def initialize(apps, schema_editor):
     for i in range(1000,3000):
-        try:
-            with transaction.atomic():
-                t = User.objects.create_user(username="TM20220"+str(i), password="TM20220"+str(i))
-                t.save()
-        except:
-            pass
+        with transaction.atomic():
+            t = User.objects.create_user(username="TM20220"+str(i), password="TM20220"+str(i))
+            t.save()
 
 
 class Migration(migrations.Migration):
@@ -19,4 +16,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.RunPython(initialize)
     ]
