@@ -2,12 +2,6 @@
 ## Contributors
 - Grace Sharma
 - Aritra Mitra
-## About
-On-Going Project.
-The goals of this Project
-are as follows:
-- "Add Points"
-- "Add Points" 
 ## Instruction
 - **Create virtual environment**
 ```bash
